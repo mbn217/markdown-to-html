@@ -1,0 +1,26 @@
+name: markdown-to-html
+
+services:
+  app:
+    image: markdown-to-html:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # Local-only by default. Expose deliberately behind an HTTPS proxy in production.
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${HOST_PORT:-8080}:3000"
+    init: true
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m,uid=1000,gid=1000,mode=1770
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    stop_grace_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

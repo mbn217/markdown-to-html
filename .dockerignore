@@ -1,0 +1,22 @@
+# An allowlist prevents local dependencies, build output, VCS data, test
+# artifacts, editor settings, and documents from entering the build context.
+**
+!package.json
+!package-lock.json
+!next.config.ts
+!tsconfig.json
+!postcss.config.mjs
+!src/
+!src/**
+!public/
+!public/**
+
+# Also exclude secrets and generated artifacts nested inside allowed folders.
+**/node_modules
+**/.next
+**/.env
+**/.env.*
+**/.npmrc
+**/*.pem
+**/*.key
+**/*.tsbuildinfo
